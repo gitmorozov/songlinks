@@ -48,7 +48,6 @@ public class User implements UserDetails {
 	
 	private boolean enabled = true;
 	
-	
 	public Long getUserId() {
 		return userId;
 	}
@@ -85,7 +84,6 @@ public class User implements UserDetails {
 		this.enabled = enabled;
 	}
 
-	@PostLoad
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 	    List<GrantedAuthority> authorities = new ArrayList<>();
