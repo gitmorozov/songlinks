@@ -14,7 +14,6 @@
 
 	<div th:replace="~{_header :: _header}"></div>
 
-
 	<div class="container h-100 min-vh-100">
 		<div class="row d-flex justify-content-center bg-body-tertiary m-0">
 			<div class="card text-black col-md-10 col-lg-6 col-xl-5 my-3">
@@ -30,73 +29,81 @@
 							<form th:action="@{/register_processing}" th:object="${user}"
 								method="POST" enctype="utf8" class="mx-1 mx-md-4">
 
-								<div class="d-flex flex-row align-items-center mb-4">
+								<div class="d-flex flex-row mb-4">
 									<svg xmlns="http://www.w3.org/2000/svg" width="2rem"
 										height="2rem" fill="currentColor"
-										class="bi bi-person-fill me-3 mb-4" viewBox="0 0 16 16">
-                                    <path
-											d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+										class="bi bi-person-fill me-3 mt-4" viewBox="0 0 16 16">
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
                                   </svg>
 									<div class="form-outline flex-fill mb-0">
-										<input type="text" th:field="*{username}" id="form3Example1c"
-											class="form-control" /> <label
-											th:text="#{registration.label.login}" class="form-label"
-											for="form3Example1c">Login</label>
+											<label th:text="#{registration.label.login}" class="form-label"
+											for="usernameField">Login</label>
+										<input type="text" th:field="*{username}" id="usernameField"
+											class="form-control" />
+											<p th:each="error: ${#fields.errors('username')}" 
+          										th:text="${error}" class="text-danger">Validation error</p>
 									</div>
 								</div>
 
-								<div class="d-flex flex-row align-items-center mb-4">
+								<div class="d-flex flex-row mb-4">
 									<svg xmlns="http://www.w3.org/2000/svg" width="2rem"
 										height="2rem" fill="currentColor"
-										class="bi bi-envelope-fill me-3 mb-4" viewBox="0 0 16 16">
-                                    <path
-											d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
+										class="bi bi-envelope-fill me-3 mt-4" viewBox="0 0 16 16">
+                                    <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z" />
                                   </svg>
 									<div class="form-outline flex-fill mb-0">
-										<input type="email" th:field="*{email}" id="form3Example3c"
-											class="form-control" /> <label
-											th:text="#{registration.label.email}" class="form-label"
-											for="form3Example3c">Your Email</label>
+											<label th:text="#{registration.label.email}" class="form-label"
+											for="emailField">Your Email</label>
+										<input type="email" th:field="*{email}" id="emailField"
+											class="form-control" />
+											<p th:each="error: ${#fields.errors('email')}" 
+          th:text="${error}" class="text-danger">Validation error</p>
 									</div>
 								</div>
 
-								<div class="d-flex flex-row align-items-center mb-4">
+								<div class="d-flex flex-row mb-4">
 									<svg xmlns="http://www.w3.org/2000/svg" width="2rem"
 										height="2rem" fill="currentColor"
-										class="bi bi-lock-fill me-3 mb-4" viewBox="0 0 16 16">
-                                    <path
-											d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+										class="bi bi-lock-fill me-3 mt-4" viewBox="0 0 16 16">
+                                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
                                   </svg>
 									<div class="form-outline flex-fill mb-0">
+											<label th:text="#{registration.label.password}" class="form-label"
+											for="passwordField">Password</label>
 										<input type="password" th:field="*{password}"
-											id="form3Example4c" class="form-control" /> <label
-											th:text="#{registration.label.password}" class="form-label"
-											for="form3Example4c">Password</label>
+											id="passwordField" class="form-control" />
+											<p th:each="error: ${#fields.errors('password')}" 
+          										th:text="${error}" class="text-danger">Validation error</p>
 									</div>
 								</div>
 
-								<div class="d-flex flex-row align-items-center mb-4">
+								<div class="d-flex flex-row mb-4">
 									<svg xmlns="http://www.w3.org/2000/svg" width="2rem"
 										height="2rem" fill="currentColor"
-										class="bi bi-key-fill me-3 mb-4" viewBox="0 0 16 16">
-                                    <path
-											d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+										class="bi bi-key-fill me-3 mt-4" viewBox="0 0 16 16">
+                                    <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                                   </svg>
 									<div class="form-outline flex-fill mb-0">
-										<input type="password" th:field="*{matchingPassword}"
-											id="form3Example4cd" class="form-control" /> <label
-											th:text="#{registration.label.confirmpassword}"
-											class="form-label" for="form3Example4cd">Repeat your
+										<label th:text="#{registration.label.confirmpassword}"
+											class="form-label" for="matchingPasswordField">Repeat your
 											password</label>
+										<input type="password" th:field="*{matchingPassword}"
+											id="matchingPasswordField" class="form-control" />
+										<p th:each="error: ${#fields.errors('global')}" 
+          									th:text="${error}" class="text-danger">Validation error</p>
 									</div>
 								</div>
 
 								<div class="form-check d-flex justify-content-center mb-5">
-									<input class="form-check-input me-2" type="checkbox" value=""
-										id="form2Example3c" /> <label class="form-check-label"
-										for="form2Example3"> I agree all statements in <a
-										href="#!">Terms of service</a>
+									<input class="form-check-input me-2" type="checkbox" value="" th:field="*{agreement}"
+										id="agreeField" />
+									<div class="d-inline">
+									<label class="form-check-label"
+										for="agreeField"> I agree all statements in <a href="#">Terms of service</a>
 									</label>
+									<p th:each="error: ${#fields.errors('agreement')}" 
+          									th:text="${error}" class="text-danger">Validation error</p>
+          							</div>
 								</div>
 
 								<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">

@@ -1,23 +1,35 @@
 package com.github.gitmorozov.songlinks.dto;
 
+import com.github.gitmorozov.songlinks.validator.Agreement;
+import com.github.gitmorozov.songlinks.validator.EmailNotExist;
+import com.github.gitmorozov.songlinks.validator.PasswordMatches;
+import com.github.gitmorozov.songlinks.validator.UserNotExist;
+
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+@PasswordMatches
 public class UserDto {
 	
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Username can not be empty")
+    @UserNotExist
     private String username;
 
-	@NotNull
-	@NotEmpty
+	@NotEmpty(message = "Email can not be empty")
+	@Email(message = "Email can not be empty")
+	@EmailNotExist
 	private String email;
     
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Password can not be empty")
     private String password;
     
     private String matchingPassword;
+    
+    @Agreement
+    private boolean agreement;
 
 	public String getUsername() {
 		return username;
@@ -49,6 +61,18 @@ public class UserDto {
 
 	public void setMatchingPassword(String matchingPassword) {
 		this.matchingPassword = matchingPassword;
+	}
+
+	public boolean isAgreement() {
+		return agreement;
+	}
+
+	public boolean getAgreement() {
+		return agreement;
+	}
+
+	public void setAgreement(boolean agreement) {
+		this.agreement = agreement;
 	}
     
 }
