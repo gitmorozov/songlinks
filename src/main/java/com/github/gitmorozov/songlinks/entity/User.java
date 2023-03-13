@@ -16,6 +16,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,12 +41,13 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	private String password;
 
-	@ElementCollection(targetClass = Role.class)
+	@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	@CollectionTable(name = "user_roles")
 	@Column(name = "role")
 	private Set<Role> roles;
 	
+	@Column(name = "enabled")
 	private boolean enabled = true;
 	
 	public Long getUserId() {
@@ -123,7 +125,7 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return false;
+		return this.enabled;
 	}
 
 }

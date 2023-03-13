@@ -3,8 +3,22 @@
 <body>
   <div th:fragment="_header" class="container">
        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid d-flex justify-content-end">
-            <a th:text="#{navbar.login}" class="nav-link" href="#">Войти</a>
+        <!-- <div class="container-fluid d-flex justify-content-end">
+        	<div class="nav-link" sec:authentication="name"></div>
+			<span class="mx-3">|</span>
+			<a th:text="#{navbar.logout}" class="nav-link" href="/logout">Выйти</a>
+			<span class="mx-3">|</span>
+            <a th:text="#{navbar.login}" class="nav-link" href="/login">Войти</a>
+            <span class="mx-3">|</span>
+            <a th:text="#{navbar.register}" class="nav-link" href="/register">Регистрация</a>
+        </div> -->
+        <div sec:authorize="isAuthenticated()" class="container-fluid d-flex justify-content-end">
+        	<div class="nav-link" sec:authentication="name"></div>
+			<span class="mx-3">|</span>
+			<a th:text="#{navbar.logout}" class="nav-link" href="/logout">Выйти</a>
+        </div>
+        <div sec:authorize="!isAuthenticated()" class="container-fluid d-flex justify-content-end">
+            <a th:text="#{navbar.login}" class="nav-link" href="/login">Войти</a>
             <span class="mx-3">|</span>
             <a th:text="#{navbar.register}" class="nav-link" href="/register">Регистрация</a>
         </div>
