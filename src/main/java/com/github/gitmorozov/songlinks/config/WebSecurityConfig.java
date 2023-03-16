@@ -27,16 +27,13 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http
-		.authorizeHttpRequests(
+		http.authorizeHttpRequests(
 				authorize -> authorize.requestMatchers("/", "/register", "/register_processing", "/login").permitAll()
-//						.anyRequest().denyAll()
+						.requestMatchers("/admin/**").hasAuthority("ADMIN")
 
-		).formLogin(
-				form -> form.loginPage("/login").loginProcessingUrl("/login").failureUrl("/login?error").defaultSuccessUrl("/").permitAll())
-//				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll())
-				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll()
-				;
+		).formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").failureUrl("/login?error")
+				.defaultSuccessUrl("/").permitAll()).logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/").permitAll();
 
 		return http.build();
 	}
