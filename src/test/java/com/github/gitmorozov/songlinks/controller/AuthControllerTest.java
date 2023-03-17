@@ -95,14 +95,23 @@ class AuthControllerTest {
         		)
     	.andDo(print())
     	.andExpect(model().hasErrors())
+    	.andExpect(model().attributeHasErrors("user"))
     	.andExpect(view().name("register"))
     	.andExpect(status().is2xxSuccessful());
 	}
 	
 	@Test
-	void testNonExistingMethod() throws Exception {
-		mockMvc.perform(get("/noSuchPage"))
+	void testNonExistingMethodWithUser() throws Exception {
+		mockMvc.perform(get("/noSuchPage")
+				.with(user("admin").roles("ADMIN")))
 		.andDo(print())
 		.andExpect(status().is4xxClientError());
+	}
+	
+	@Test
+	void testNonExistingMethodWithAnonymousUser() throws Exception {
+		mockMvc.perform(get("/noSuchPage"))
+		.andDo(print())
+		.andExpect(status().is3xxRedirection());
 	}
 }
