@@ -36,7 +36,7 @@
 								<th
 									th:replace="~{admin/_fragments :: header(#{admin.table.users.enabled})}"></th>
 							</tr>
-							<tr class="" th:each="user : ${users.getContent()}">
+							<tr th:if="${users.getContent()} != null" class="" th:each="user : ${users.getContent()}">
 								<td class="" th:text="${user.userId}"></td>
 								<td class="" th:text="${user.username}"></td>
 								<td class="" th:text="${user.email}"></td>

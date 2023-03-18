@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -103,7 +104,7 @@ class AuthControllerTest {
 	@Test
 	void testNonExistingMethodWithUser() throws Exception {
 		mockMvc.perform(get("/noSuchPage")
-				.with(user("admin").roles("ADMIN")))
+				.with(user("admin").authorities(new SimpleGrantedAuthority("ADMIN"))))
 		.andDo(print())
 		.andExpect(status().is4xxClientError());
 	}
