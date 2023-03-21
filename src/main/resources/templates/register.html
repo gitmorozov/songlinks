@@ -99,7 +99,7 @@
 										id="agreeField" />
 									<div class="d-inline">
 									<label class="form-check-label"
-										for="agreeField"> I agree all statements in <a href="#">Terms of service</a>
+										for="agreeField"> [[#{registration.agree}]] <a href="#">[[#{registration.terms}]]</a>
 									</label>
 									<p th:each="error: ${#fields.errors('agreement')}" 
           									th:text="${error}" class="text-danger">Validation error</p>
