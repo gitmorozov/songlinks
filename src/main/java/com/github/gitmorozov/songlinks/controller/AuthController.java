@@ -26,6 +26,16 @@ public class AuthController {
         return "register";
     }
     
+    @GetMapping("/register_processing")
+    public String processRegisterWithErrors(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult, Model model) {
+    	if(bindingResult.hasErrors()){
+    		return "register";
+    	}
+    	userService.saveUser(userDto);
+    	
+    	return "index";
+    }
+    
     @PostMapping("/register_processing")
     public String processRegister(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){

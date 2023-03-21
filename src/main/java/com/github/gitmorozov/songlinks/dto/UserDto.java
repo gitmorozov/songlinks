@@ -7,22 +7,19 @@ import com.github.gitmorozov.songlinks.validator.UserNotExist;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @PasswordMatches
 public class UserDto {
 	
-    @NotNull
     @NotEmpty(message = "Username can not be empty")
     @UserNotExist
     private String username;
 
 	@NotEmpty(message = "Email can not be empty")
-	@Email(message = "Email can not be empty")
+	@Email(message = "Enter valid email")
 	@EmailNotExist
 	private String email;
     
-    @NotNull
     @NotEmpty(message = "Password can not be empty")
     private String password;
     

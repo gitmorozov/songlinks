@@ -15,7 +15,7 @@ import jakarta.validation.Payload;
 @Constraint(validatedBy = EmailExistenceValidator.class)
 @Documented
 public @interface EmailNotExist {
-    String message() default "User wuth this email exists";
+    String message() default "User with this email exists";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
