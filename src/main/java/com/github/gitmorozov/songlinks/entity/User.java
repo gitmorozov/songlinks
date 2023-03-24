@@ -2,6 +2,7 @@ package com.github.gitmorozov.songlinks.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +21,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostLoad;
 import jakarta.persistence.Table;
 
@@ -50,6 +55,17 @@ public class User implements UserDetails {
 	@Column(name = "enabled")
 	private boolean enabled = true;
 	
+    @OneToMany(mappedBy = "user")
+    private Set<Song> songs = new HashSet<>();
+    
+    @ManyToMany
+//    @JoinTable(
+//    		  name = "user_playlist", 
+//    		  joinColumns = @JoinColumn(name = "user_id"), 
+//    		  inverseJoinColumns = @JoinColumn(name = "playlist_id"))
+    private Set<Playlist> playlists = new HashSet<>();
+
+    
 	public Long getUserId() {
 		return userId;
 	}
@@ -126,6 +142,24 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
+	}
+
+
+
+	public Set<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(Set<Song> songs) {
+		this.songs = songs;
+	}
+
+	public Set<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(Set<Playlist> playlists) {
+		this.playlists = playlists;
 	}
 
 }
