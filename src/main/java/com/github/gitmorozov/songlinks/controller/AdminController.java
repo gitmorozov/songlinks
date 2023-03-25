@@ -7,15 +7,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.gitmorozov.songlinks.dto.CategoryDto;
 import com.github.gitmorozov.songlinks.dto.UserDto;
+import com.github.gitmorozov.songlinks.entity.Category;
 import com.github.gitmorozov.songlinks.entity.User;
+import com.github.gitmorozov.songlinks.repository.CategoryRepository;
 import com.github.gitmorozov.songlinks.repository.UserRepository;
+import com.github.gitmorozov.songlinks.service.CategoryService;
 import com.github.gitmorozov.songlinks.service.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,7 +33,13 @@ public class AdminController {
 	private UserRepository userRepo;
 	
 	@Autowired
+	private CategoryRepository categoryRepo;
+	
+	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	@GetMapping("/users")
 	public String showUsers(Model model, Pageable pageable) {
@@ -55,5 +70,29 @@ public class AdminController {
 		
 		return "admin/usersPage";
 	}
+	
+	@GetMapping("/categories")
+	public String showCategories(Model model) {
+        CategoryDto category = new CategoryDto();
+        model.addAttribute("category", category);
+        List<Category> categoryTree = categoryService.findAll();
+    	model.addAttribute("categoryTree", categoryTree);
+		return "admin/adminCategories";
+	}
+	
+    @PostMapping("/addCategory")
+    public String processRegister(@ModelAttribute("category") @Valid CategoryDto categoryDto, BindingResult bindingResult, Model model) {
+        System.out.println("------------------------ addCategory");
+        System.out.println("------------------------ CategoryDto.parentId = " + categoryDto.getParentId());
+    	if(bindingResult.hasErrors()){
+    		System.out.println("------------------------ has errors");
+            return "admin/adminCategories";
+        }
+    	categoryService.saveCategory(categoryDto);
+    	List<Category> categoryTree = categoryService.findAll();
+    	model.addAttribute("categoryTree", categoryTree);
+    	
+    	return "admin/adminCategories";
+    }
 
 }

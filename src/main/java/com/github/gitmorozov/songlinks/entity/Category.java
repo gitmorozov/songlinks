@@ -25,6 +25,9 @@ public class Category {
 	@Column(length = 255, unique = true, nullable = false)
 	private String name;
 	
+	@Column(length = 255, unique = true, nullable = false)
+	private String slug;
+	
     @ManyToOne(fetch = FetchType.LAZY)
     private Category parent;
  
@@ -72,6 +75,14 @@ public class Category {
 
 	public void setSongs(Set<Song> songs) {
 		this.songs = songs;
+	}
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
 	}
 	
 }

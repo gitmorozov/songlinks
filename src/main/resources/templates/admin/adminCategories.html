@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title th:text="#{registration.title}">Bootstrap demo</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous" />
+</head>
+<body>
+
+	<div th:replace="~{_header :: _header}"></div>
+
+	<div class="container h-100 min-vh-100">
+		<div class="row d-flex justify-content-center bg-body-tertiary m-0">
+			<div class="card text-black my-3">
+				<div class="card-body p-md-2">
+					<div class="row justify-content-center">
+
+						<p th:text="#{admin.categories.h1}"
+							class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+
+						<form th:action="@{/admin/addCategory}" th:object="${category}" method="POST" class="col-12 col-md-8">
+							<div class="mb-3">
+								<label for="titleField" class="form-label">Category name</label>
+								<input type="text" th:field="*{categoryName}" class="form-control" id="titleField">
+								<p th:each="error: ${#fields.errors('categoryName')}" 
+          										th:text="${error}" class="text-danger">Validation error</p>
+							</div>
+							<div class="mb-3">
+								<label for="slugField" class="form-label">Slug</label>
+								<input type="text" th:field="*{slug}" class="form-control" id="slugField">
+								<p th:each="error: ${#fields.errors('slug')}" 
+          										th:text="${error}" class="text-danger">Validation error</p>
+							</div>
+							
+							<div class="mb-5">
+							<label for="parentField" class="form-label">Parent category</label>
+								<select th:field="*{parentId}" id="parentField" class="form-select" aria-label="Default select example">
+								  <option th:value="0"> Nothing selected </option>
+								  <option th:each="option : ${categoryTree}" th:value="${option.getId()}" th:text="${option.getName()}"></option>
+								 <!--  <option th:value="1">One</option>
+								  <option th:value="2">Two</option>
+								  <option th:value="3">Three</option> -->
+								</select>
+								<p th:each="error: ${#fields.errors('parentId')}" 
+	          										th:text="${error}" class="text-danger">Validation error</p>
+							</div>
+							<div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+								<button th:text="#{registration.button.register}" type="submit"
+										class="btn btn-primary btn-lg">Add Category</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+		crossorigin="anonymous"></script>
+</body>
+</html>
