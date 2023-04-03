@@ -110,6 +110,10 @@ public class User implements UserDetails {
 	    for (Role role: roles) {
 	    	authorities.add(new SimpleGrantedAuthority(role.toString()));
 	    }
+	    
+	    System.out.println("---------------------");
+	    System.out.println(authorities);
+	    System.out.println("---------------------");
 
 	    return  authorities;
 	}

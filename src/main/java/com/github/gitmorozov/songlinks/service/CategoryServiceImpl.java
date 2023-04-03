@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.gitmorozov.songlinks.dto.CategoryDto;
+import com.github.gitmorozov.songlinks.dto.CategoryNode;
 import com.github.gitmorozov.songlinks.entity.Category;
 import com.github.gitmorozov.songlinks.repository.CategoryRepository;
 
@@ -33,6 +34,15 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> findAll() {
 		return categoryRepo.findAll();
+	}
+
+	@Override
+	public List<CategoryNode> getTree() {
+		List<CategoryNode> tree = categoryRepo.categoryFullTree();
+		System.out.println("--------------------------------------");
+		System.out.println(tree);
+		System.out.println("--------------------------------------");
+		return tree;
 	}
 
 }

@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.gitmorozov.songlinks.dto.CategoryDto;
+import com.github.gitmorozov.songlinks.dto.CategoryNode;
 import com.github.gitmorozov.songlinks.dto.UserDto;
 import com.github.gitmorozov.songlinks.entity.Category;
 import com.github.gitmorozov.songlinks.entity.User;
@@ -75,17 +78,19 @@ public class AdminController {
 	public String showCategories(Model model) {
         CategoryDto category = new CategoryDto();
         model.addAttribute("category", category);
-        List<Category> categoryTree = categoryService.findAll();
+//        List<Category> categoryTree = categoryService.findAll();
+//    	model.addAttribute("categoryTree", categoryTree);
+        List<CategoryNode> categoryTree = categoryService.getTree();
     	model.addAttribute("categoryTree", categoryTree);
 		return "admin/adminCategories";
 	}
 	
     @PostMapping("/addCategory")
     public String processRegister(@ModelAttribute("category") @Valid CategoryDto categoryDto, BindingResult bindingResult, Model model) {
-        System.out.println("------------------------ addCategory");
-        System.out.println("------------------------ CategoryDto.parentId = " + categoryDto.getParentId());
+//        System.out.println("------------------------ addCategory");
+//        System.out.println("------------------------ CategoryDto.parentId = " + categoryDto.getParentId());
     	if(bindingResult.hasErrors()){
-    		System.out.println("------------------------ has errors");
+//    		System.out.println("------------------------ has errors");
             return "admin/adminCategories";
         }
     	categoryService.saveCategory(categoryDto);
@@ -95,4 +100,10 @@ public class AdminController {
     	return "admin/adminCategories";
     }
 
+	@GetMapping("/tree")
+	public @ResponseBody List<CategoryNode> showCategoryTree(Model model) {
+        List<CategoryNode> categoryTree = categoryService.getTree();
+    	model.addAttribute("categoryTree", categoryTree);
+		return categoryTree;
+	}
 }

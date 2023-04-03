@@ -20,8 +20,10 @@
 				<div class="card-body p-md-2">
 					<div class="row justify-content-center">
 
-						<p th:text="#{admin.categories.h1}"
-							class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+						<h1 th:text="#{admin.categories.h1}"
+							class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</h1>
+							
+							<div th:replace="~{fragments/categoryTree :: categoryTree}"></div>
 
 						<form th:action="@{/admin/addCategory}" th:object="${category}" method="POST" class="col-12 col-md-8">
 							<div class="mb-3">
