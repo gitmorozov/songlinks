@@ -84,7 +84,9 @@ public class AdminController {
     public String processRegister(@ModelAttribute("category") @Valid CategoryDto categoryDto, BindingResult bindingResult, Model model) {
 
     	if(bindingResult.hasErrors()){
-            return "redirect:/admin/categories";
+        	List<Category> prefixedTree = categoryService.getTreeWithPrefixes();
+        	model.addAttribute("prefixedTree", prefixedTree);
+            return "admin/adminCategories";
         }
     	categoryService.saveCategory(categoryDto);
     	
