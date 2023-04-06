@@ -3,10 +3,8 @@
 <body>
 
 	<div th:fragment="categoryTree" class="mb-5">
-		<label for="parentField" class="form-label">Parent category</label>
 		<div id="categoryTree" class="">
-			<p th:each="node : ${categoryTree}"
-				th:text="${node.getName()}"></p>
+			<p th:each="node : ${categoryTree}" th:text="${node.getName()}"></p>
 		</div>
 	</div>
 

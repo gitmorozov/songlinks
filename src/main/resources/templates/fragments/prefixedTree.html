@@ -1,0 +1,13 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<div th:fragment="prefixedTree" class="mb-5">
+		<div id="categoryTree" class="">
+			<p th:each="node : ${prefixedTree}"
+				th:text="${node.getPrefix()} + ' ' + ${node.getName()}"></p>
+		</div>
+	</div>
+
+</body>
+</html>

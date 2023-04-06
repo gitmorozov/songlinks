@@ -36,9 +36,6 @@ public class AdminController {
 	private UserRepository userRepo;
 	
 	@Autowired
-	private CategoryRepository categoryRepo;
-	
-	@Autowired
 	private UserService userService;
 	
 	@Autowired
@@ -78,26 +75,20 @@ public class AdminController {
 	public String showCategories(Model model) {
         CategoryDto category = new CategoryDto();
         model.addAttribute("category", category);
-//        List<Category> categoryTree = categoryService.findAll();
-//    	model.addAttribute("categoryTree", categoryTree);
-        List<CategoryNode> categoryTree = categoryService.getTree();
-    	model.addAttribute("categoryTree", categoryTree);
+    	List<Category> prefixedTree = categoryService.getTreeWithPrefixes();
+    	model.addAttribute("prefixedTree", prefixedTree);
 		return "admin/adminCategories";
 	}
 	
     @PostMapping("/addCategory")
     public String processRegister(@ModelAttribute("category") @Valid CategoryDto categoryDto, BindingResult bindingResult, Model model) {
-//        System.out.println("------------------------ addCategory");
-//        System.out.println("------------------------ CategoryDto.parentId = " + categoryDto.getParentId());
+
     	if(bindingResult.hasErrors()){
-//    		System.out.println("------------------------ has errors");
-            return "admin/adminCategories";
+            return "redirect:/admin/categories";
         }
     	categoryService.saveCategory(categoryDto);
-    	List<Category> categoryTree = categoryService.findAll();
-    	model.addAttribute("categoryTree", categoryTree);
     	
-    	return "admin/adminCategories";
+    	return "redirect:/admin/categories";
     }
 
 	@GetMapping("/tree")

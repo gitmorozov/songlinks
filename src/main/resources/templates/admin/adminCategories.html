@@ -23,7 +23,10 @@
 						<h1 th:text="#{admin.categories.h1}"
 							class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</h1>
 							
-							<div th:replace="~{fragments/categoryTree :: categoryTree}"></div>
+							<div th:replace="~{fragments/prefixedTree :: prefixedTree}"></div>
+							
+						<h2 th:text="#{admin.categories.h1}"
+							class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Add Category</h2>
 
 						<form th:action="@{/admin/addCategory}" th:object="${category}" method="POST" class="col-12 col-md-8">
 							<div class="mb-3">
@@ -41,13 +44,13 @@
 							
 							<div class="mb-5">
 							<label for="parentField" class="form-label">Parent category</label>
+								
 								<select th:field="*{parentId}" id="parentField" class="form-select" aria-label="Default select example">
 								  <option th:value="0"> Nothing selected </option>
-								  <option th:each="option : ${categoryTree}" th:value="${option.getId()}" th:text="${option.getName()}"></option>
-								 <!--  <option th:value="1">One</option>
-								  <option th:value="2">Two</option>
-								  <option th:value="3">Three</option> -->
+								  <option th:each="option : ${prefixedTree}" th:value="${option.getId()}"
+										th:text="${option.getPrefix()} + ' ' +${option.getName()}"></option>
 								</select>
+								
 								<p th:each="error: ${#fields.errors('parentId')}" 
 	          										th:text="${error}" class="text-danger">Validation error</p>
 							</div>

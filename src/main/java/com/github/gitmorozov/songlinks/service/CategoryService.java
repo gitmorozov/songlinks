@@ -13,4 +13,6 @@ public interface CategoryService {
 	 public List<Category> findAll();
 	 
 	 public List<CategoryNode> getTree();
+	 
+	 public List<Category> getTreeWithPrefixes();
 }

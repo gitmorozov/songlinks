@@ -12,10 +12,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category implements Comparable<Category> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +37,12 @@ public class Category {
     
     @OneToMany(mappedBy = "category")
     private Set<Song> songs = new HashSet<>();
+    
+    @Transient
+    String prefix;
+    
+    @Transient
+    String path;
 
 	public Long getId() {
 		return id;
@@ -83,6 +90,25 @@ public class Category {
 
 	public void setSlug(String slug) {
 		this.slug = slug;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+
+
+	@Override
+	public int compareTo(Category o) {
+		return this.getName().compareTo(o.getName());
+	}
+
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", name=" + name + ", prefix=" + prefix + "]";
 	}
 	
 }
